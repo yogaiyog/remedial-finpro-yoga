@@ -5,7 +5,7 @@ import ProductTable from "@/components/home-components/tableProduct";
 
 const Home = () => {
   return (
-    <div className="min-h-[90vh] px-20 py-10">
+    <div className="min-h-[90vh] px-20 py-10 -z-10">
      <ClientTable/>
      <div className="mt-2"></div>
      <ProductTable/>

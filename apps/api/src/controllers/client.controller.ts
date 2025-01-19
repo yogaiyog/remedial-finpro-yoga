@@ -45,7 +45,7 @@ export class ClientController {
   }
 
   async createClient(req: Request, res: Response) {
-    const { userId, name, address, contactInfo, paymentTerms } = req.body;
+    const { userId, name, address, email, paymentTerms } = req.body;
 
     try {
       const newProduct = await prisma.client.create({
@@ -53,7 +53,7 @@ export class ClientController {
           userId,
           name,
           address,
-          contactInfo,
+          email,
           paymentTerms
         },
       });
@@ -68,7 +68,7 @@ export class ClientController {
   async updateClient(req: Request, res: Response) {
     const { id } = req.params;
     console.log(req.body)
-    const { name, address, contactInfo, paymentTerms } = req.body;
+    const { name, address, contactInfo: email, paymentTerms } = req.body;
   
     try {
       const updatedClient = await prisma.client.update({
@@ -76,7 +76,7 @@ export class ClientController {
         data: { 
           name, 
           address, 
-          contactInfo, 
+          email, 
           paymentTerms 
         },
       });

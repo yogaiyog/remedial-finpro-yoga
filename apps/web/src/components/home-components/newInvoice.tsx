@@ -10,7 +10,7 @@ const NewInvoiceButton = () => {
   const [invoiceId, setInvoiceId] = useState<string>("");
 
   return (
-    <div className="fixed bottom-20 left-20">
+    <div className="absolute bottom-20 left-20">
       <div className="dropdown dropdown-hover">
         <div tabIndex={0} role="button" className="btn m-1 text-xl">
           Create Invoice

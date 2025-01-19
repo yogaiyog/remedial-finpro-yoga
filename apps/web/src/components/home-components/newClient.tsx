@@ -17,14 +17,14 @@ const NewClient = ({ onClose }: NewClientProps) => {
     initialValues: {
       name: "",
       address: "",
-      contactInfo: "",
+      email: "",
     },
     validationSchema: Yup.object({
       name: Yup.string()
         .min(3, "Name must be at least 3 characters")
         .required("Name is required"),
       address: Yup.string().required("Address is required"),
-      contactInfo: Yup.string()
+      email: Yup.string()
         .email("Invalid email format")
         .required("Contact info is required"),
     }),
@@ -36,7 +36,7 @@ const NewClient = ({ onClose }: NewClientProps) => {
             userId: userId, // Gunakan userId dari localStorage
             name: values.name,
             address: values.address,
-            contactInfo: values.contactInfo,
+            email: values.email,
           },
           {
             headers: {
@@ -103,20 +103,20 @@ const NewClient = ({ onClose }: NewClientProps) => {
 
           {/* Contact Info Field */}
           <div className="form-control mb-4">
-            <label className="label font-bold">Contact Info</label>
+            <label className="label font-bold">Email</label>
             <input
               type="email"
-              name="contactInfo"
+              name="email"
               className={`input input-bordered ${
-                formik.touched.contactInfo && formik.errors.contactInfo ? "input-error" : ""
+                formik.touched.email && formik.errors.email ? "input-error" : ""
               }`}
-              value={formik.values.contactInfo}
+              value={formik.values.email}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               placeholder="Enter Email or Contact Info"
             />
-            {formik.touched.contactInfo && formik.errors.contactInfo && (
-              <span className="text-error text-sm">{formik.errors.contactInfo}</span>
+            {formik.touched.email && formik.errors.email && (
+              <span className="text-error text-sm">{formik.errors.email}</span>
             )}
           </div>
 

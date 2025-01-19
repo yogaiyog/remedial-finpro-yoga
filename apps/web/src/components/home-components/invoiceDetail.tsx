@@ -124,7 +124,7 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({ invoice, onClose }) => {
                 <th>Client Address:</th> <td>{invoice.client.address}</td>
               </tr>
               <tr>
-                <th>Email:</th> <td>{invoice.client.contactInfo}</td>
+                <th>Email:</th> <td>{invoice.client.email}</td>
               </tr>
               <tr>
                 <th>Due Date:</th> <td>{new Date(invoice.dueDate).toLocaleDateString()}</td>

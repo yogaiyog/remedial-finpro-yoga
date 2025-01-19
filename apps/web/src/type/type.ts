@@ -24,7 +24,7 @@ export interface InvoiceItem {
 export interface Client {
     name: string;
     address: string;
-    contactInfo: string;
+    email: string;
   }
 
 export interface Product {
@@ -41,4 +41,37 @@ export enum InvoiceStatus {
   PENDING = "PENDING",
   PAID = "PAID",
   OVERDUE = "OVERDUE"
+}
+
+//--------------
+
+export interface IinvoiceItem {
+  id: string;
+  invoiceId: string;
+  productId: string;
+  quantity: number;
+  price: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Iclient {
+  id: string;
+  name: string;
+  address: string;
+  email: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Iinvoice {
+  id: string;
+  userId: string;
+  clientId: string;
+  dueDate: string;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+  client: Iclient;
+  invoiceItems: IinvoiceItem[];
 }

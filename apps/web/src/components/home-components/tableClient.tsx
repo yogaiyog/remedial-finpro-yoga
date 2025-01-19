@@ -8,7 +8,7 @@ interface Client {
   id: string;
   name: string;
   address: string;
-  contactInfo: string;
+  email: string;
 }
 
 const ClientTable = () => {
@@ -77,7 +77,7 @@ const ClientTable = () => {
   return (
     <>
     <div className="collapse bg-base-200">
-       <input type="checkbox"/>
+       <input type="checkbox" className="z-10"/>
       <div className="collapse-title text-xl font-medium">MY CLIENTS</div>
       <div className="collapse-content">
         <div className="overflow-x-auto">
@@ -96,7 +96,7 @@ const ClientTable = () => {
                   <th>{index + 1}</th>
                   <td>{client.name}</td>
                   <td>{client.address}</td>
-                  <td>{client.contactInfo}</td>
+                  <td>{client.email}</td>
                 </tr>
               ))}
               <tr>

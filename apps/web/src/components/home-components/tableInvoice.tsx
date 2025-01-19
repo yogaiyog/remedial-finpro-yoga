@@ -3,41 +3,12 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import InvoiceDetail from "./invoiceDetail";
+import { Iinvoice } from "@/type/type";
 
-interface InvoiceItem {
-  id: string;
-  invoiceId: string;
-  productId: string;
-  quantity: number;
-  price: number;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface Client {
-  id: string;
-  name: string;
-  address: string;
-  contactInfo: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface Invoice {
-  id: string;
-  userId: string;
-  clientId: string;
-  dueDate: string;
-  status: string;
-  createdAt: string;
-  updatedAt: string;
-  client: Client;
-  invoiceItems: InvoiceItem[];
-}
 
 const InvoiceTable = () => {
-  const [invoices, setInvoices] = useState<Invoice[]>([]);
-  const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null); // Mengganti `SelectedTnvoice`
+  const [invoices, setInvoices] = useState<Iinvoice[]>([]);
+  const [selectedInvoice, setSelectedInvoice] = useState<Iinvoice | null>(null); // Mengganti `SelectedTnvoice`
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [userID, setUserID] = useState<string | null>(null);
@@ -76,7 +47,7 @@ const InvoiceTable = () => {
           throw new Error(`Error: ${response.status}`);
         }
 
-        const data: Invoice[] = await response.json();
+        const data: Iinvoice[] = await response.json();
         setInvoices(data);
       } catch (err: any) {
         setError(err.message);
@@ -112,6 +83,7 @@ const InvoiceTable = () => {
                 <tr>
                   <th>#</th>
                   <th>Client Name</th>
+                  <th>Issue Date</th>
                   <th>Due Date</th>
                   <th>Status</th>
                   <th>Total Items</th>
@@ -133,6 +105,7 @@ const InvoiceTable = () => {
                     >
                       <th>{index + 1}</th>
                       <td>{invoice.client.name}</td>
+                      <td>{new Date(invoice.createdAt).toLocaleDateString()}</td>
                       <td>{new Date(invoice.dueDate).toLocaleDateString()}</td>
                       <td>{invoice.status}</td>
                       <td>{totalItems}</td>

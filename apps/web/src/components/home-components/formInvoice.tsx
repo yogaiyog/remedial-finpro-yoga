@@ -107,7 +107,7 @@ useEffect(() => {
 
   return (
     <div className="modal modal-open">
-      <div className="modal-box w-11/12 w-5xl">
+      <div className="modal-box w-8/12 max-w-5xl">
         <h3 className="font-bold text-lg">
           {isRecurring ? "Recurring Invoice" : "One-Time Invoice"}
         </h3>
@@ -123,30 +123,40 @@ useEffect(() => {
               disabled
             />
           </div>
-
+    
           {/* Client Name */}
           <div className="form-control">
             <label className="label font-bold">Client</label>
             <div className="flex w-full">
-                <select name="clientId" className="input input-bordered w-1/2" value={formik.values.clientId} onChange={formik.handleChange} onBlur={formik.handleBlur}>
+              <select
+                name="clientId"
+                className="input input-bordered w-3/4"
+                value={formik.values.clientId}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+              >
                 <option value="" disabled>
-                    Select Client
+                  Select Client
                 </option>
                 {filteredClients.map((client: any) => (
-                    <option key={client.id} value={client.id}>
+                  <option key={client.id} value={client.id}>
                     {client.name}
-                    </option>
+                  </option>
                 ))}
-                </select>
-                <input type="text" placeholder="Search client" className="input input-bordered mb-2" value={searchTerm} onChange={handleSearch}/>
+              </select>
+              <input
+                type="text"
+                placeholder="Search client"
+                className="input input-bordered mb-2 w-1/4"
+                value={searchTerm}
+                onChange={handleSearch}
+              />
             </div>
             {formik.touched.clientId && formik.errors.clientId && (
-              <span className="text-error text-sm">
-                {formik.errors.clientId}
-              </span>
+              <span className="text-error text-sm">{formik.errors.clientId}</span>
             )}
           </div>
-
+    
           {/* Due Date */}
           <div className="form-control">
             <label className="label font-bold">Due Date</label>
@@ -162,7 +172,7 @@ useEffect(() => {
               <span className="text-error text-sm">{formik.errors.dueDate}</span>
             )}
           </div>
-
+    
           {/* Recurring Invoice */}
           {isRecurring && (
             <>
@@ -190,7 +200,7 @@ useEffect(() => {
                     </span>
                   )}
               </div>
-
+    
               <div className="form-control">
                 <label className="label font-bold">Recurring End Date</label>
                 <input
@@ -210,9 +220,9 @@ useEffect(() => {
               </div>
             </>
           )}
-
+    
           {/* Actions */}
-          <div className="modal-action z-50">
+          <div className="modal-action">
             <button type="submit" className="btn btn-primary">
               Submit
             </button>
@@ -223,6 +233,8 @@ useEffect(() => {
         </form>
       </div>
     </div>
+  
+
   );
 };
 

@@ -2,6 +2,7 @@ import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 interface NewProductProps {
   onClose: () => void;
@@ -47,7 +48,9 @@ const NewProduct = ({ onClose }: NewProductProps) => {
         );
 
         if (response.status === 201) {
-          alert("Product added successfully!");
+          toast.success("Product added successfully!", {
+            onClose: () => location.reload()
+        })
           resetForm(); // Reset form setelah berhasil
           onClose(); // Tutup modal
         }
