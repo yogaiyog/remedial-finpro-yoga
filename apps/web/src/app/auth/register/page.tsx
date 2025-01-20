@@ -49,104 +49,117 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-md">
-        <h1 className="text-2xl font-bold mb-6 text-center">Register</h1>
-        <Formik
-          initialValues={{
-            username: "",
-            email: "",
-            password: "",
-            fullName: "",
-          }}
-          validationSchema={validationSchema}
-          onSubmit={handleSubmit}
-        >
-          {({ isSubmitting }) => (
-            <Form className="space-y-4">
-              {/* Username */}
-              <div>
-                <label htmlFor="username" className="block text-sm font-medium text-gray-700">
-                  Username
-                </label>
-                <Field
-                  name="username"
-                  type="text"
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                />
-                <ErrorMessage
-                  name="username"
-                  component="div"
-                  className="text-red-500 text-sm mt-1"
-                />
-              </div>
+    <div className="flex justify-center items-center min-h-screen bg-gray-50 dark:bg-gray-900">
+  <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700">
+    <h1 className="text-2xl font-bold text-center text-gray-900 dark:text-white mb-6">
+      Register your account
+    </h1>
 
-              {/* Email */}
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                  Email
-                </label>
-                <Field
-                  name="email"
-                  type="email"
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                />
-                <ErrorMessage
-                  name="email"
-                  component="div"
-                  className="text-red-500 text-sm mt-1"
-                />
-              </div>
+    <Formik
+      initialValues={{
+        username: "",
+        email: "",
+        password: "",
+        fullName: "",
+      }}
+      validationSchema={validationSchema}
+      onSubmit={handleSubmit}
+    >
+      {({ isSubmitting }) => (
+        <Form className="space-y-6">
 
-              {/* Password */}
-              <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                  Password
-                </label>
-                <Field
-                  name="password"
-                  type="password"
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                />
-                <ErrorMessage
-                  name="password"
-                  component="div"
-                  className="text-red-500 text-sm mt-1"
-                />
-              </div>
+          {/* Username */}
+          <div>
+            <label htmlFor="username" className="block text-sm font-medium text-gray-900 dark:text-white">
+              Username
+            </label>
+            <Field
+              name="username"
+              type="text"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-primary-600 focus:border-primary-600 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 sm:text-sm"
+            />
+            <ErrorMessage
+              name="username"
+              component="div"
+              className="text-red-500 text-sm mt-1"
+            />
+          </div>
 
-              {/* Full Name */}
-              <div>
-                <label htmlFor="fullName" className="block text-sm font-medium text-gray-700">
-                  Full Name
-                </label>
-                <Field
-                  name="fullName"
-                  type="text"
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                />
-                <ErrorMessage
-                  name="fullName"
-                  component="div"
-                  className="text-red-500 text-sm mt-1"
-                />
-              </div>
+          {/* Email */}
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-900 dark:text-white">
+              Email
+            </label>
+            <Field
+              name="email"
+              type="email"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-primary-600 focus:border-primary-600 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 sm:text-sm"
+            />
+            <ErrorMessage
+              name="email"
+              component="div"
+              className="text-red-500 text-sm mt-1"
+            />
+          </div>
 
-              {/* Submit Button */}
-              <div>
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                >
-                  {isSubmitting ? "Registering..." : "Register"}
-                </button>
-              </div>
-            </Form>
-          )}
-        </Formik>
-      </div>
-    </div>
+          {/* Password */}
+          <div>
+            <label htmlFor="password" className="block text-sm font-medium text-gray-900 dark:text-white">
+              Password
+            </label>
+            <Field
+              name="password"
+              type="password"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-primary-600 focus:border-primary-600 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 sm:text-sm"
+            />
+            <ErrorMessage
+              name="password"
+              component="div"
+              className="text-red-500 text-sm mt-1"
+            />
+          </div>
+
+          {/* Full Name */}
+          <div>
+            <label htmlFor="fullName" className="block text-sm font-medium text-gray-900 dark:text-white">
+              Full Name
+            </label>
+            <Field
+              name="fullName"
+              type="text"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-primary-600 focus:border-primary-600 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 sm:text-sm"
+            />
+            <ErrorMessage
+              name="fullName"
+              component="div"
+              className="text-red-500 text-sm mt-1"
+            />
+          </div>
+
+          {/* Submit Button */}
+          <div>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            >
+              {isSubmitting ? "Registering..." : "Register"}
+            </button>
+          </div>
+
+          <p className="text-sm font-light text-gray-500 dark:text-gray-400 text-center">
+            Already have an account?{" "}
+            <a href="#" className="font-medium text-blue-600 hover:underline dark:text-blue-500" onClick={()=>{router.push('/auth/login')}}>
+              Sign in
+            </a>
+          </p>
+
+        </Form>
+      )}
+    </Formik>
+  </div>
+</div>
+
   );
 };
 

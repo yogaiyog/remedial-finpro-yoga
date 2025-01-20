@@ -14,6 +14,7 @@ import { ClientRouter } from './routers/client.router';
 import { InvoiceRouter } from './routers/invoice.router';
 import { InvoiceItemRouter } from './routers/invoiceItems.router';
 import { UserRouter } from './routers/user.router';
+import { MailRouter } from './routers/mail.router';
 
 export default class App {
   private app: Express;
@@ -60,6 +61,7 @@ export default class App {
     const clientRouter = new ClientRouter()
     const invoiceRouter = new InvoiceRouter()
     const invoiceItemRouter = new InvoiceItemRouter()
+    const mailRouter = new MailRouter()
 
     this.app.get('/api', (req: Request, res: Response) => {
       res.send(`Hello, Purwadhika Student API!`);
@@ -70,6 +72,7 @@ export default class App {
     this.app.use('/api/client', clientRouter.getRouter());
     this.app.use('/api/invoice', invoiceRouter.getRouter());
     this.app.use('/api/invoice-items', invoiceItemRouter.getRouter());
+    this.app.use('/api/mail', mailRouter.getRouter());
   }
 
   public start(): void {

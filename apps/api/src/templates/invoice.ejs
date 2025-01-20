@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Invoice</title>
+</head>
+<body>
+  <h1>Invoice for <%= client.name %></h1>
+  <p>Dear <%= client.name %>,</p>
+  <p>Below are the details of your invoice:</p>
+
+  <table border="1">
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Product Name</th>
+        <th>Quantity</th>
+        <th>Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% let totalAmount = 0; %>
+      <% invoiceItems.forEach((item, index) => { %>
+        <% const itemTotal = item.price; %>
+        <tr>
+          <td><%= index + 1 %></td>
+          <td><%= item.product.name %></td>
+          <td><%= item.quantity %></td>
+          <td>Rp <%= item.price.toLocaleString() %></td>
+        </tr>
+        <% totalAmount += itemTotal; %>
+      <% }); %>
+    </tbody>
+  </table>
+  <h3>Total: Rp <%= totalAmount.toLocaleString() %></h3>
+  <p>Due Date: <%= new Date(dueDate).toLocaleDateString() %></p>
+
+  <p>Thank you for your business!</p>
+</body>
+</html>

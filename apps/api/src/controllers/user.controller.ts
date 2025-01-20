@@ -2,32 +2,58 @@ import { Request, Response } from 'express';
 import prisma from '@/prisma';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import ejs from "ejs";
+import path from "path";
+import { transporter } from "@/helpers/nodemailer";
 
 const JWT_SECRET = process.env.JWT_SECRET || 'sangat rahasia'; // Simpan di .env file
 const SALT_ROUNDS = 10;
 
 export class UserController {
 
-    async createUser(req: Request, res: Response) {
-      const { email, password, fullName } = req.body;
-  
-      try {
-        const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
-  
-        const newUser = await prisma.user.  create({
-          data: {
-            email,
-            password: hashedPassword, 
-            fullName,
-          },
-        });
-  
-        return res.status(201).json(newUser);
-      } catch (error) {
-        console.error(error);
-        return res.status(500).send({ message: 'Error creating user' });
-      }
+  async createUser(req: Request, res: Response) {
+    const { email, password, fullName } = req.body;
+
+    try {
+      // Hash password
+      const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
+
+      // Buat user baru di database
+      const newUser = await prisma.user.create({
+        data: {
+          email,
+          password: hashedPassword,
+          fullName,
+        },
+      });
+
+      // Kirim email verifikasi
+      const templatePath = path.join(__dirname, "../templates/verifyEmail.ejs");
+      const verificationLink = `http://localhost:8000/api/mail/verify-email?email=${encodeURIComponent(email)}`;
+
+      const emailHtml = await ejs.renderFile(templatePath, {
+        fullName,
+        verificationLink,
+      });
+
+      await transporter.sendMail({
+        from: '"Your Company" <your-email@example.com>', // Ganti dengan email pengirim
+        to: email, // Email penerima
+        subject: "Verify Your Email",
+        html: emailHtml,
+      });
+
+      console.log(`Verification email sent to ${email}`);
+
+      return res.status(201).json({
+        message: "User created successfully. Verification email sent.",
+        user: newUser,
+      });
+    } catch (error) {
+      console.error("Error creating user:", error);
+      return res.status(500).send({ message: "Error creating user" });
     }
+  }
   
     async loginUser(req: Request, res: Response) {
       const { email, password } = req.body;

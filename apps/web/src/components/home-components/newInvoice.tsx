@@ -10,40 +10,43 @@ const NewInvoiceButton = () => {
   const [invoiceId, setInvoiceId] = useState<string>("");
 
   return (
-    <div className="absolute bottom-20 left-20">
-      <div className="dropdown dropdown-hover">
-        <div tabIndex={0} role="button" className="btn m-1 text-xl">
-          Create Invoice
+    <div className="w-screen h-screen absolute left-0 top-0">
+      <div className="fixed bottom-20 left-20">
+        <div className="dropdown dropdown-hover">
+          <div tabIndex={0} role="button" className="btn m-1 text-xl">
+            Create Invoice
+          </div>
+          <ul
+            tabIndex={0}
+            className="dropdown-content menu menu-horizontal bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+          >
+            <li>
+              <button
+                onClick={() => {
+                  setIsRecurring(false);
+                  setIsModalOpen(true);
+                }}
+              >
+                One-Time Invoice
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => {
+                  setIsRecurring(true);
+                  setIsModalOpen(true);
+                }}
+              >
+                Recurring Invoice
+              </button>
+            </li>
+          </ul>
         </div>
-        <ul
-          tabIndex={0}
-          className="dropdown-content menu menu-horizontal bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
-        >
-          <li>
-            <button
-              onClick={() => {
-                setIsRecurring(false);
-                setIsModalOpen(true);
-              }}
-            >
-              One-Time Invoice
-            </button>
-          </li>
-          <li>
-            <button
-              onClick={() => {
-                setIsRecurring(true);
-                setIsModalOpen(true);
-              }}
-            >
-              Recurring Invoice
-            </button>
-          </li>
-        </ul>
-      </div>
 
-      {/* Modal for Creating Invoice */}
-      {isModalOpen && (
+
+      </div>
+            {/* Modal for Creating Invoice */}
+            {isModalOpen && (
         <FormInvoice
           isRecurring={isRecurring}
           onClose={() => setIsModalOpen(false)}
