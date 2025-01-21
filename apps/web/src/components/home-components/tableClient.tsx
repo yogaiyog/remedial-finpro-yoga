@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import NewClient from "./newClient";
+import backendUrl from "@/helpers/backend_url";
 
 interface Client {
   id: string;
@@ -38,7 +39,7 @@ const ClientTable = () => {
       }
 
       try {
-        const response = await fetch(`http://localhost:8000/api/client/${userID}/userId`, {
+        const response = await fetch(`${backendUrl}client/${userID}/userId`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -66,21 +67,24 @@ const ClientTable = () => {
     }
   }, [userID, router]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   if (error) {
     return <div>Error: {error}</div>;
   }
 
   return (
-    <>
+    <> {loading? <div className="skeleton h-16 w-full"></div> :
     <div className="collapse bg-base-200">
        <input type="checkbox" className="z-10"/>
       <div className="collapse-title text-xl font-medium">MY CLIENTS</div>
       <div className="collapse-content">
         <div className="overflow-x-auto">
+          {!clients.length ? 
+          <div className="text-center">
+            <p className="text-sm text-slate-500">No clients found. Start adding your first client now!</p>
+            <button className="btn btn-circle btn-outline w-auto mt-2 px-4 z-50"
+                onClick={() => setIsModalOpen(true)}> Add New Client</button>
+          </div> :
           <table className="table">
             <thead>
               <tr>
@@ -91,6 +95,7 @@ const ClientTable = () => {
               </tr>
             </thead>
             <tbody>
+              
               {clients.map((client, index) => (
                 <tr key={client.id}>
                   <th>{index + 1}</th>
@@ -109,10 +114,10 @@ const ClientTable = () => {
                 </td>
               </tr>
             </tbody>
-          </table>
+          </table> }
         </div>
       </div>
-    </div>
+    </div> }
 
     {isModalOpen && (
         <NewClient onClose={() => setIsModalOpen(false)} />

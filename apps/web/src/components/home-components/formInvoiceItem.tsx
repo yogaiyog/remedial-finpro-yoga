@@ -3,6 +3,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import backendUrl from "@/helpers/backend_url";
 
 const InvoiceItemsForm = ({
   invoiceId,
@@ -20,7 +21,7 @@ const InvoiceItemsForm = ({
   useEffect(() => {
     const userId = localStorage.getItem("userId");
     axios
-      .get(`http://localhost:8000/api/product/${userId}/userId`, {
+      .get(`${backendUrl}product/${userId}/userId`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -66,7 +67,7 @@ const InvoiceItemsForm = ({
       };
 
       axios
-      .post("http://localhost:8000/api/invoice-items/bulk", payload, {
+      .post(`${backendUrl}invoice-items/bulk`, payload, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",

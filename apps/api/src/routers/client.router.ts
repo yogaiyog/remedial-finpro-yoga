@@ -18,7 +18,7 @@ export class ClientRouter {
     
     this.router.get('/:id', verifyToken, this.clientController.getClienttById.bind(this.clientController));
 
-    this.router.get('/:id/userId',verifyToken, this.clientController.getClientByUser.bind(this.clientController))
+    this.router.get('/:userId/userId',verifyToken, this.clientController.getClientByUser.bind(this.clientController))
     
     this.router.post('/', verifyToken, this.clientController.createClient.bind(this.clientController));
     

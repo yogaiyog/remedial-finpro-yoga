@@ -6,6 +6,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import backendUrl from "@/helpers/backend_url";
 
 // Tipe untuk nilai formulir
 interface RegisterFormValues {
@@ -16,7 +17,6 @@ interface RegisterFormValues {
 }
 
 const Register: React.FC = () => {
-  const backendUrl = process.env.NEXT_PUBLIC_BASE_API_URL || 'http://localhost:8000/api/'
 
   const router = useRouter()
   const validationSchema = Yup.object().shape({

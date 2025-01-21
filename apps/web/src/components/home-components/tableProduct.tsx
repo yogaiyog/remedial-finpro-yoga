@@ -69,9 +69,6 @@ const ProductTable = () => {
     }
   }, [userID, backendUrl, router]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   if (error) {
     return <div>Error: {error}</div>;
@@ -79,44 +76,62 @@ const ProductTable = () => {
 
   return (
     <>
-      <div className="collapse bg-base-200">
-        <input type="checkbox" defaultChecked />
-        <div className="collapse-title text-xl font-medium">MY PRODUCTS</div>
-        <div className="collapse-content">
-          <div className="overflow-x-auto">
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Price (idr)</th>
-                </tr>
-              </thead>
-              <tbody>
-                {products.map((product, index) => (
-                  <tr key={product.id}>
-                    <th>{index + 1}</th>
-                    <td>{product.name}</td>
-                    <td>{product.description}</td>
-                    <td>{`${product.price.toFixed(2)}`}</td>
-                  </tr>
-                ))}
-                <tr>
-                  <td colSpan={4}>
+        {loading ? (
+          <div className="skeleton h-16 w-full"></div>
+        ) : (
+          <div className="collapse bg-base-200">
+            <input type="checkbox" defaultChecked />
+            <div className="collapse-title text-xl font-medium">MY PRODUCTS</div>
+            <div className="collapse-content">
+              <div className="overflow-x-auto">
+                {!products.length ? (
+                  <div className="text-center">
+                    <p className="text-sm text-slate-500">
+                      No products found. Start adding your first product now!
+                    </p>
                     <button
                       className="btn btn-circle btn-outline w-auto mt-2 px-4"
                       onClick={() => setIsModalOpen(true)}
                     >
                       Add New Product
                     </button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                  </div>
+                ) : (
+                  <table className="table">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Price (idr)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {products.map((product, index) => (
+                        <tr key={product.id}>
+                          <th>{index + 1}</th>
+                          <td>{product.name}</td>
+                          <td>{product.description}</td>
+                          <td>{`${product.price.toFixed(2)}`}</td>
+                        </tr>
+                      ))}
+                      <tr>
+                        <td colSpan={4}>
+                          <button
+                            className="btn btn-circle btn-outline w-auto mt-2 px-4"
+                            onClick={() => setIsModalOpen(true)}
+                          >
+                            Add New Product
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                )}
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        )}
 
       {isModalOpen && (
         <NewProduct onClose={() => setIsModalOpen(false)} />

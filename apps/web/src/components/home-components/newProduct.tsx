@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { toast } from "react-toastify";
+import backendUrl from "@/helpers/backend_url";
 
 interface NewProductProps {
   onClose: () => void;
@@ -11,7 +12,7 @@ interface NewProductProps {
 const NewProduct = ({ onClose }: NewProductProps) => {
   const token = localStorage.getItem("token"); // Ambil token dari localStorage
   const userId = localStorage.getItem("userId"); // Ambil userId dari localStorage
-  const backendUrl = "http://localhost:8000/api/product";
+  const backendUrls = `${backendUrl}product`;
 
   const formik = useFormik({
     initialValues: {
@@ -32,7 +33,7 @@ const NewProduct = ({ onClose }: NewProductProps) => {
     onSubmit: async (values, { resetForm }) => {
       try {
         const response = await axios.post(
-          backendUrl,
+          backendUrls,
           {
             userId: userId, // User ID dari localStorage
             name: values.name,

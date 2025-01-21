@@ -16,7 +16,7 @@ export class InvoiceRouter {
     
     this.router.get('/:id', this.invoiceController.getInvoiceById.bind(this.invoiceController));
 
-    this.router.get('/:id/userId', this.invoiceController.getAllInvoices.bind(this.invoiceController))
+    this.router.get('/:userId/userId', this.invoiceController.getAllInvoices.bind(this.invoiceController))
     
     this.router.post('/', this.invoiceController.createInvoice.bind(this.invoiceController));
     

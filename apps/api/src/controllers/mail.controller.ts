@@ -43,8 +43,8 @@ export class MailController {
       });
 
       const info = await transporter.sendMail({
-        from: '"Your Company" <your-email@example.com>', 
-        to: "yogaadi0902@gmail.com", // Email penerima invoice.client.email
+        from: 'Anvoice', 
+        to: invoice.client.email, 
         subject: `Invoice #${id}`, 
         html: emailHtml, 
       });

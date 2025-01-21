@@ -2,6 +2,7 @@ import { Invoice, InvoiceStatus } from '@/type/type';  // Pastikan enum InvoiceS
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import backendUrl from '@/helpers/backend_url';
 
 const InvoiceStatusUpdate: React.FC<{ invoice: Invoice, onClose: () => void }> = ({ invoice, onClose }) => {
   const [status, setStatus] = useState<InvoiceStatus>(invoice.status as InvoiceStatus);  // Tipe status sesuai dengan enum InvoiceStatus
@@ -19,7 +20,7 @@ const InvoiceStatusUpdate: React.FC<{ invoice: Invoice, onClose: () => void }> =
       status: newStatus,  
     };
     
-    const url = `http://localhost:8000/api/invoice/${invoice.id}`;
+    const url = `${backendUrl}invoice/${invoice.id}`;
     const data = {
       ...updatedInvoice,
       dueDate: updatedInvoice.dueDate,

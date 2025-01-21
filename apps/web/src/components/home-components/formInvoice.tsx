@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { toast } from "react-toastify";
+import backendUrl from "@/helpers/backend_url";
 
 const FormInvoice = ({
   isRecurring,
@@ -23,7 +24,7 @@ const token = localStorage.getItem("token");
 useEffect(() => {
   if (userId && token) {
     axios
-      .get(`http://localhost:8000/api/client/${userId}/userId`, {
+      .get(`${backendUrl}client/${userId}/userId`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -86,7 +87,7 @@ useEffect(() => {
       const token = localStorage.getItem("token"); 
     
       axios
-        .post("http://localhost:8000/api/invoice/", output, {
+        .post(`${backendUrl}invoice/`, output, {
           headers: {
             Authorization: `Bearer ${token}`, 
             "Content-Type": "application/json",

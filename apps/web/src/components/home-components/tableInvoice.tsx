@@ -63,16 +63,13 @@ const InvoiceTable = () => {
     }
   }, [userID, backendUrl, router]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   if (error) {
     return <div>Error: {error}</div>;
   }
 
   return (
-    <>
+    <> {invoices.length>0 &&
       <div className="collapse bg-base-200">
         <input type="checkbox" />
         <div className="collapse-title text-xl font-medium">MY INVOICES</div>
@@ -93,7 +90,7 @@ const InvoiceTable = () => {
               <tbody>
                 {invoices.map((invoice, index) => {
                   const totalItems = invoice.invoiceItems.reduce((sum, item) => sum + item.quantity, 0);
-                  const totalPrice = invoice.invoiceItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+                  const totalPrice = invoice.invoiceItems.reduce((sum, item) => sum + item.price, 0);
                   return (
                     <tr
                       key={invoice.id}
@@ -117,7 +114,7 @@ const InvoiceTable = () => {
             </table>
           </div>
         </div>
-      </div>
+      </div>}
       {isModalOpen && (
         <InvoiceDetail invoice={selectedInvoice} onClose={()=>{setIsModalOpen(false)}} />
       )}

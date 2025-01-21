@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { toast } from "react-toastify";
+import backendUrl from "@/helpers/backend_url";
 
 interface NewClientProps {
   onClose: () => void;
@@ -11,7 +12,7 @@ interface NewClientProps {
 const NewClient = ({ onClose }: NewClientProps) => {
   const token = localStorage.getItem("token"); // Ambil token dari localStorage
   const userId = localStorage.getItem("userId"); // Ambil userId dari localStorage
-  const backendUrl = "http://localhost:8000/api/client/";
+  const backendUrls = `${backendUrl}client/`;
 
   const formik = useFormik({
     initialValues: {
@@ -31,7 +32,7 @@ const NewClient = ({ onClose }: NewClientProps) => {
     onSubmit: async (values, { resetForm }) => {
       try {
         const response = await axios.post(
-          backendUrl,
+          backendUrls,
           {
             userId: userId, // Gunakan userId dari localStorage
             name: values.name,

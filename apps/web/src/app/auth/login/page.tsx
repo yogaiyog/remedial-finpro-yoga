@@ -7,10 +7,10 @@ import * as Yup from "yup";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { LoginFormValues } from "@/type/type";
+import backendUrl from "@/helpers/backend_url";
 
 
 const Login: React.FC = () => {
-  const backendUrl = process.env.NEXT_PUBLIC_BASE_API_URL || 'http://localhost:8000/api/'
   const router = useRouter()
   
   const validationSchema = Yup.object().shape({

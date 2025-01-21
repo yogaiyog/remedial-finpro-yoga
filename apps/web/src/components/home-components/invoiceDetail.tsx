@@ -7,6 +7,8 @@ import { toast } from "react-toastify";
 import ConfirmationModal from "../confirmation";
 import InvoiceItemsForm from "./formInvoiceItem";
 import InvoiceStatusUpdate from "./invoiceStatusUpdate";
+import SendInvoiceButton from "./sendInvoice";
+import backendUrl from "@/helpers/backend_url";
 
 const InvoiceDetail: React.FC<InvoiceDetailProps> = ({ invoice, onClose }) => {
   const [productMap, setProductMap] = useState<{ [key: string]: string }>({});
@@ -33,7 +35,7 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({ invoice, onClose }) => {
 
       try {
         const response = await axios.get(
-          `http://localhost:8000/api/product/${userId}/userId`,
+          `${backendUrl}product/${userId}/userId`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -65,7 +67,7 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({ invoice, onClose }) => {
     }
 
     try {
-      await axios.delete(`http://localhost:8000/api/invoice-items/${selectedItemId}`, {
+      await axios.delete(`${backendUrl}invoice-items/${selectedItemId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -177,18 +179,17 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({ invoice, onClose }) => {
             <strong>Total Price:</strong> IDR {totalPrice.toFixed(2)}
           </p>
         </div>
-        <button
-          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-          onClick={onClose}
-        >
-          Close
-        </button>
+        <div className="flex justify-between pr-16 mt-4">
+          <button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600" onClick={onClose}>Close</button>
+          <SendInvoiceButton clientEmail={invoice.client.email} InvoiceId={invoice.id}/>
+        </div>
       </div>
-
       <ConfirmationModal
         isOpen={confirmationModalOpen}
         onConfirm={handleDelete}
         onCancel={() => setConfirmationModalOpen(false)}
+        title='Confirm Deletion'
+        desc="Are you sure you want to delete this item?"
       />
       {formItemsModalOpen && <InvoiceItemsForm invoiceId={invoiceId} isOpen={true} onClose={() => setFormItemsModalOpen(false)} />}
       {statusUpdateModal && <InvoiceStatusUpdate invoice={invoice} onClose={() => setStatusUpdateModal(false)} />}
