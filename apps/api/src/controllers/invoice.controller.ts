@@ -50,6 +50,12 @@ export class InvoiceController {
   async createInvoice(req: Request, res: Response) {
     const { userId, clientId, dueDate, status, recurringSchedule, recurringEndDate } = req.body;
 
+    let recurringActive = false
+
+    if (recurringEndDate!== null && recurringSchedule!== null) {
+        recurringActive = true
+    }
+
     try {
       const newInvoice = await prisma.invoice.create({
         data: {
@@ -59,6 +65,7 @@ export class InvoiceController {
           status,
           recurringSchedule,
           recurringEndDate: recurringEndDate ? new Date(recurringEndDate) : null,
+          recurringActive
         },
       });
 
