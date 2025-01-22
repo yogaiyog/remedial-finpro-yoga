@@ -3,25 +3,46 @@ import prisma from '@/prisma';
 
 export class InvoiceController {
   async getAllInvoices(req: Request, res: Response) {
-    const {userId} = req.params
-
+    const { userId } = req.params;
+    const { page = 1, limit = 10 } = req.query; // Default page = 1 dan limit = 10
+  
     try {
+      const pageNumber = parseInt(page as string, 10);
+      const pageSize = parseInt(limit as string, 10);
+  
+      // Hitung offset untuk menentukan data yang akan diambil
+      const offset = (pageNumber - 1) * pageSize;
+  
+      // Ambil total count data
+      const totalCount = await prisma.invoice.count({
+        where: { userId },
+      });
+  
+      // Ambil data dengan limit dan offset
       const invoices = await prisma.invoice.findMany({
-        where:{userId},
-
+        where: { userId },
         include: {
           user: true,
           client: true,
           invoiceItems: true,
         },
+        skip: offset,
+        take: pageSize,
+        orderBy: { createdAt: 'desc' }, // Optional: untuk mengurutkan data
       });
-
-      return res.status(200).send(invoices);
+  
+      return res.status(200).send({
+        currentPage: pageNumber,
+        totalPages: Math.ceil(totalCount / pageSize),
+        totalItems: totalCount,
+        invoices,
+      });
     } catch (error) {
       console.error(error);
       return res.status(500).send({ message: 'Error retrieving invoices' });
     }
   }
+  
 
   async getInvoiceById(req: Request, res: Response) {
     const { id } = req.params;
@@ -49,10 +70,11 @@ export class InvoiceController {
 
   async createInvoice(req: Request, res: Response) {
     const { userId, clientId, dueDate, status, recurringSchedule, recurringEndDate } = req.body;
-
+ console.log(recurringEndDate, recurringSchedule);
+ 
     let recurringActive = false
 
-    if (recurringEndDate!== null && recurringSchedule!== null) {
+    if (recurringEndDate && recurringSchedule) {
         recurringActive = true
     }
 
