@@ -1,3 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --p: rgb(59, 130, 246); /* Primary */
+    --pc: rgb(255, 255, 255); /* Primary content */
+    --s: rgb(251, 191, 36); /* Secondary */
+    --sc: rgb(55, 65, 81); /* Secondary content */
+    --a: rgb(219, 39, 119); /* Accent */
+    --ac: rgb(255, 255, 255); /* Accent content */
+    --n: rgb(229, 231, 235); /* Neutral */
+    --nc: rgb(55, 65, 81); /* Neutral content */
+    --b1: rgb(255, 255, 255); /* Base-100 */
+    --b2: rgb(146, 21, 21); /* Base-200 */
+    --b3: rgb(229, 231, 235); /* Base-300 */
+    --bc: rgb(55, 65, 81); /* Base content */
+    --in: rgb(59, 130, 246); /* Info */
+    --inc: rgb(255, 255, 255); /* Info content */
+    --su: rgb(34, 197, 94); /* Success */
+    --suc: rgb(255, 255, 255); /* Success content */
+    --wa: rgb(251, 191, 36); /* Warning */
+    --wac: rgb(255, 255, 255); /* Warning content */
+    --er: rgb(239, 68, 68); /* Error */
+    --erc: rgb(255, 255, 255); /* Error content */
+  }
+}

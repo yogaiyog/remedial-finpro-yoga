@@ -27,6 +27,8 @@ export interface Client {
     email: string;
   }
 
+  
+
 export interface Product {
     id: string;
     name: string;
@@ -74,4 +76,12 @@ export interface Iinvoice {
   updatedAt: string;
   client: Iclient;
   invoiceItems: IinvoiceItem[];
+}
+
+export interface ITableClient {
+  id: string;
+  name: string;
+  address: string;
+  email: string;
+  _count:any
 }

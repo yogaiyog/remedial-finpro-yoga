@@ -23,6 +23,8 @@ export class InvoiceRouter {
     this.router.put('/:id', this.invoiceController.updateInvoice.bind(this.invoiceController));
     
     this.router.delete('/:id', this.invoiceController.deleteInvoice.bind(this.invoiceController));
+
+    this.router.get('/:userId/stats', this.invoiceController.getInvoiceStats.bind(this.invoiceController))
   }
 
   getRouter(): Router {

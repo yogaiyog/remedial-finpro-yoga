@@ -4,6 +4,7 @@ import './globals.css';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { ToastContainer } from 'react-toastify';
+import FontAwsomeConfig from './fontAwsomeConfig';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -19,6 +20,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <FontAwsomeConfig/>
+      </head>
       <body className={inter.className}>
         <Header />
         {children}

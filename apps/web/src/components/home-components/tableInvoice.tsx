@@ -86,9 +86,8 @@ const InvoiceTable = () => {
   return (
     <>
       {invoices.length > 0 && (
-        <div className="collapse bg-base-200">
-          <input type="checkbox" />
-          <div className="collapse-title text-xl font-medium">MY INVOICES</div>
+        <div className="collapse collapse-open bg-slate-300 shadow-md shadow-emerald-900 min-h-[50vh]">
+          <div className="collapse-title text-xl font-bold">MY INVOICES</div>
           <div className="collapse-content">
             <div className="overflow-x-auto">
               <table className="table">
@@ -116,13 +115,13 @@ const InvoiceTable = () => {
                           setIsModalOpen(true);
                         }}
                       >
-                        <th>{index + 1 + (currentPage - 1) * invoices.length}</th>
-                        <td>{invoice.client.name || "N/A"}</td>
-                        <td>{new Date(invoice.createdAt).toLocaleDateString()}</td>
-                        <td>{new Date(invoice.dueDate).toLocaleDateString()}</td>
-                        <td>{invoice.status}</td>
-                        <td>{totalItems}</td>
-                        <td>{totalPrice.toFixed(2)}</td>
+                        <th className="border-b border-slate-700">{index + 1 + (currentPage - 1) * invoices.length}</th>
+                        <td className="border-b border-slate-700">{invoice.client.name || "N/A"}</td>
+                        <td className="border-b border-slate-700">{new Date(invoice.createdAt).toLocaleDateString()}</td>
+                        <td className="border-b border-slate-700">{new Date(invoice.dueDate).toLocaleDateString()}</td>
+                        <td className="border-b border-slate-700">{invoice.status}</td>
+                        <td className="border-b border-slate-700">{totalItems}</td>
+                        <td className="border-b border-slate-700">{totalPrice.toFixed(2)}</td>
                       </tr>
                     );
                   })}
@@ -136,7 +135,7 @@ const InvoiceTable = () => {
                 disabled={currentPage === 1}>
                   «
               </button>
-              <button className="join-item btn"> Page {currentPage} of {totalPages}</button>
+              <button className="join-item btn bg-transparent border-none"> Page {currentPage} of {totalPages}</button>
               <button className="join-item btn"
                 onClick={handleNextPage}
                 disabled={currentPage === totalPages}

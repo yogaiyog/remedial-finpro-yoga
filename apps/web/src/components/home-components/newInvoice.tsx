@@ -10,15 +10,15 @@ const NewInvoiceButton = () => {
   const [invoiceId, setInvoiceId] = useState<string>("");
 
   return (
-    <div className=" absolute left-0 top-0">
-      <div className="fixed bottom-20 left-20">
+    <div className="m-auto">
+      <div>
         <div className="dropdown dropdown-hover">
-          <div tabIndex={0} role="button" className="btn m-1 text-xl">
+          <div tabIndex={0} role="button" className="btn btn-success m-1 text-xl">
             Create Invoice
           </div>
           <ul
             tabIndex={0}
-            className="dropdown-content menu menu-horizontal bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+            className="dropdown-content menu menu-horizontal bg-slate-100 rounded-box z-[1] w-52 p-2 shadow"
           >
             <li>
               <button

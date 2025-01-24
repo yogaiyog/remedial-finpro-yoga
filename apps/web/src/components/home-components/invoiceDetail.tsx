@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Invoice, InvoiceDetailProps, InvoiceItem, Product } from "@/type/type";
 import { toast } from "react-toastify";
 import ConfirmationModal from "../confirmation";
+import html2pdf from 'html2pdf.js'
 import InvoiceItemsForm from "./formInvoiceItem";
 import InvoiceStatusUpdate from "./invoiceStatusUpdate";
 import SendInvoiceButton from "./sendInvoice";
@@ -18,6 +19,20 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({ invoice, onClose }) => {
   const [formItemsModalOpen, setFormItemsModalOpen] = useState(false);
   const [invoiceId, setInvoiceId] = useState<string>('');
   const [statusUpdateModal, setStatusUpdateModal] = useState<boolean>(false);
+  const slideref = useRef(null)
+
+  async function handlePdf() {
+    console.log(html2pdf());
+    
+    var opt = {
+      margin:       1,
+      filename:     'myfile.pdf',
+      image:        { type: 'jpeg', quality: 0.98 },
+      html2canvas:  { scale: 2 },
+      jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+    html2pdf().from(slideref.current).set(opt).save
+  }
 
   useEffect(() => {
     if (!invoice) return;
@@ -41,7 +56,7 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({ invoice, onClose }) => {
           }
         );
 
-        const products = response.data as Product[];
+        const products = response.data.products as Product[];
         const productMap = products.reduce((map, product) => {
           map[product.id] = product.name;
           return map;
@@ -102,7 +117,7 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({ invoice, onClose }) => {
 
   return (
     <div className="modal modal-open">
-      <div className="modal-box w-11/12 max-w-5xl">
+      <div className="modal-box w-11/12 max-w-5xl bg-white">
         <button
           className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
           onClick={onClose}
@@ -112,7 +127,7 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({ invoice, onClose }) => {
         <div className="flex justify-between">
             <h3 className="text-xl font-bold mb-4">Invoice Details</h3>
             <div className="flex gap-2 mr-4">
-                <strong>Invoice ID:</strong> <p>{invoice.id}</p>
+                <strong>Invoice ID:</strong> <p>{invoice.id}</p> <button ref={slideref} onClick={handlePdf}>download</button>
             </div>
         </div>
         

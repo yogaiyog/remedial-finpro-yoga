@@ -145,4 +145,69 @@ export class InvoiceController {
       return res.status(500).send({ message: 'Error deleting invoice' });
     }
   }
+
+  async getInvoiceStats(req: Request, res: Response) {
+    const { userId } = req.params;
+  
+    try {
+      const pendingInvoices = await prisma.invoice.count({
+        where: { 
+          status: 'PENDING',
+          userId,
+        },
+      });
+  
+      const paidInvoices = await prisma.invoice.count({
+        where: { 
+          status: 'PAID',
+          userId,
+        },
+      });
+  
+      const overdueInvoices = await prisma.invoice.count({
+        where: { 
+          status: 'OVERDUE',
+          userId,
+        },
+      });
+  
+      const totalIncome = await prisma.invoiceItem.aggregate({
+        _sum: {
+          price: true,
+        },
+        where: {
+          invoice: {
+            userId,
+          },
+        },
+      });
+  
+      const pendingIncome = await prisma.invoiceItem.aggregate({
+        _sum: {
+          price: true,
+        },
+        where: {
+          invoice: {
+            userId,
+            status: {
+              in: ['PENDING', 'OVERDUE'],
+            },
+          },
+        },
+      });
+  
+      // Return hasil
+      res.json({
+        totalPendingInvoices: pendingInvoices,
+        totalPaidInvoices: paidInvoices,
+        totalOverdueInvoices: overdueInvoices,
+        totalIncome: totalIncome._sum.price || 0,
+        pendingIncome: pendingIncome._sum.price || 0,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Something went wrong' });
+    }
+  }
+  
 }

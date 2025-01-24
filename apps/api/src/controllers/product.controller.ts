@@ -33,22 +33,41 @@ export class ProductController {
 
   async getProductByUser(req: Request, res: Response) {
     const { id } = req.params;
-
+    const { page = 1, limit = 10 } = req.query;
+  
+    // Konversi query parameter ke angka
+    const pageNumber = parseInt(page as string, 10);
+    const limitNumber = parseInt(limit as string, 10);
+  
+    // Hitung offset untuk pagination
+    const offset = (pageNumber - 1) * limitNumber;
+  
     try {
-      const product = await prisma.product.findMany({
-        where: { userId:id },
+      // Fetch produk dengan pagination
+      const products = await prisma.product.findMany({
+        where: { userId: id },
+        skip: offset,
+        take: limitNumber,
       });
-
-      if (!product) {
-        return res.status(404).send({ message: 'Product not found' });
-      }
-
-      return res.status(200).send(product);
+  
+      // Hitung total produk untuk user tertentu
+      const totalProducts = await prisma.product.count({
+        where: { userId: id },
+      });
+  
+      // Kirimkan data dengan informasi pagination
+      return res.status(200).send({
+        products,
+        totalProducts,
+        totalPages: Math.ceil(totalProducts / limitNumber),
+        currentPage: pageNumber,
+      });
     } catch (error) {
       console.error(error);
       return res.status(500).send({ message: 'Error retrieving product' });
     }
   }
+  
 
   async createProduct(req: Request, res: Response) {
     const { userId, name, description, price } = req.body;

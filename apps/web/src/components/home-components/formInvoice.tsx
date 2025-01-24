@@ -12,44 +12,52 @@ const FormInvoice = ({
 }: {
   isRecurring: boolean;
   onClose: () => void;
-  onSuccess: (invoiceId: string) => void; 
+  onSuccess: (invoiceId: string) => void;
 }) => {
-  const [clients, setClients] = useState([]);
-  const [filteredClients, setFilteredClients] = useState([]);
+  const [clients, setClients] = useState<any[]>([]);
+  const [filteredClients, setFilteredClients] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-const userId = localStorage.getItem("userId");
-const token = localStorage.getItem("token");
+  const userId = localStorage.getItem("userId");
+  const token = localStorage.getItem("token");
 
-useEffect(() => {
-  if (userId && token) {
-    axios
-      .get(`${backendUrl}client/${userId}/userId`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        setClients(response.data);
-        setFilteredClients(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching clients:", error);
-      });
-  }
-}, [userId, token]);
+  useEffect(() => {
+    if (userId && token) {
+      setIsLoading(true);
+      axios
+        .get(`${backendUrl}client/${userId}/userId?page=1&limit=100000`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          const clientData = response.data?.clients || [];
+          setClients(clientData);
+          setFilteredClients(clientData);
+        })
+        .catch((error) => {
+          console.error("Error fetching clients:", error);
+          toast.error("Failed to fetch clients. Please try again later.");
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  }, [userId, token]);
 
-
+  // Handle search
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const term = e.target.value.toLowerCase();
     setSearchTerm(term);
     setFilteredClients(
-      clients.filter((client: any) =>
+      clients.filter((client) =>
         client.name.toLowerCase().includes(term)
       )
     );
   };
 
+  // Formik setup
   const formik = useFormik({
     initialValues: {
       userId: userId || "",
@@ -71,7 +79,7 @@ useEffect(() => {
         : Yup.string().notRequired(),
     }),
     onSubmit: (values) => {
-      const output = isRecurring
+      const payload = isRecurring
         ? {
             ...values,
             recurringSchedule: values.recurringSchedule,
@@ -83,25 +91,22 @@ useEffect(() => {
             dueDate: values.dueDate,
             status: values.status,
           };
-    
-      const token = localStorage.getItem("token"); 
-    
+
       axios
-        .post(`${backendUrl}invoice/`, output, {
+        .post(`${backendUrl}invoice/`, payload, {
           headers: {
-            Authorization: `Bearer ${token}`, 
+            Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
         })
         .then((response) => {
-          console.log("Response:", response.data);
           toast.success("Invoice submitted successfully!");
-          onSuccess(response.data.id)
-          onClose(); 
+          onSuccess(response.data.id);
+          onClose();
         })
         .catch((error) => {
           console.error("Error submitting invoice:", error);
-          alert("Failed to submit invoice. Please try again.");
+          toast.error("Failed to submit invoice. Please try again.");
         });
     },
   });
@@ -113,19 +118,7 @@ useEffect(() => {
           {isRecurring ? "Recurring Invoice" : "One-Time Invoice"}
         </h3>
         <form onSubmit={formik.handleSubmit} className="space-y-4">
-          {/* User ID */}
-          <div className="form-control hidden">
-            <label className="label font-bold">User ID</label>
-            <input
-              type="text"
-              name="userId"
-              className="input input-bordered"
-              value={formik.values.userId}
-              disabled
-            />
-          </div>
-    
-          {/* Client Name */}
+          {/* Client Dropdown */}
           <div className="form-control">
             <label className="label font-bold">Client</label>
             <div className="flex w-full">
@@ -135,11 +128,12 @@ useEffect(() => {
                 value={formik.values.clientId}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
+                disabled={isLoading}
               >
                 <option value="" disabled>
-                  Select Client
+                  {isLoading ? "Loading clients..." : "Select Client"}
                 </option>
-                {filteredClients.map((client: any) => (
+                {filteredClients.map((client) => (
                   <option key={client.id} value={client.id}>
                     {client.name}
                   </option>
@@ -157,8 +151,8 @@ useEffect(() => {
               <span className="text-error text-sm">{formik.errors.clientId}</span>
             )}
           </div>
-    
-          {/* Due Date */}
+
+          {/* Other Fields */}
           <div className="form-control">
             <label className="label font-bold">Due Date</label>
             <input
@@ -173,8 +167,7 @@ useEffect(() => {
               <span className="text-error text-sm">{formik.errors.dueDate}</span>
             )}
           </div>
-    
-          {/* Recurring Invoice */}
+
           {isRecurring && (
             <>
               <div className="form-control">
@@ -201,7 +194,6 @@ useEffect(() => {
                     </span>
                   )}
               </div>
-    
               <div className="form-control">
                 <label className="label font-bold">Recurring End Date</label>
                 <input
@@ -221,10 +213,9 @@ useEffect(() => {
               </div>
             </>
           )}
-    
-          {/* Actions */}
+
           <div className="modal-action">
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-primary" disabled={isLoading}>
               Submit
             </button>
             <button type="button" className="btn" onClick={onClose}>
@@ -234,8 +225,6 @@ useEffect(() => {
         </form>
       </div>
     </div>
-  
-
   );
 };
 

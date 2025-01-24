@@ -22,7 +22,7 @@ export const Header = () => {
             <li className='mr-16'>
               <details>
                 <summary>Account</summary>
-                <ul className="bg-base-100 rounded-t-none p-2 z-50 min-w-32">
+                <ul className="bg-slate-100 rounded-t-none p-2 z-50 min-w-32">
                   <li>
                     <a>My Profile</a>
                   </li>
