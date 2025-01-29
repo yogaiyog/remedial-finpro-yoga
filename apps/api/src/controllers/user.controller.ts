@@ -29,7 +29,7 @@ export class UserController {
 
       // Kirim email verifikasi
       const templatePath = path.join(__dirname, "../templates/verifyEmail.ejs");
-      const verificationLink = `http://localhost:8000/api/mail/verify-email?email=${encodeURIComponent(email)}`;
+      const verificationLink = `${process.env.NEXT_PUBLIC_BASE_API_URL}mail/verify-email?email=${encodeURIComponent(email)}`;
 
       const emailHtml = await ejs.renderFile(templatePath, {
         fullName,

@@ -90,9 +90,9 @@ const ProductTable = () => {
   return (
     <>
       {loading ? (
-        <div className="skeleton h-16 w-full"></div>
+        <div className="skeleton w-full h-full bg-slate-200 rounded-md"></div>
       ) : (
-        <div className="collapse collapse-open bg-slate-300 min-h-[50vh] shadow-md shadow-emerald-900">
+        <div className="collapse collapse-open bg-slate-300 min-h-[50vh] shadow-md shadow-emerald-900 h-full">
           <div className="collapse-title text-xl font-medium flex justify-between items-baseline">
             <h1>MY PRODUCTS</h1>
             <button className="btn btn-outline w-auto mt-2 btn-success"
@@ -138,10 +138,11 @@ const ProductTable = () => {
               )}
             </div>
             {/* Pagination Controls */}
-              
+            
+            {products.length &&           
             <div className="join w-full flex justify-center">
                 <button 
-                  className="join-item btn" 
+                  className="join-item btn border-none" 
                   onClick={() => handleNextPage(currentPage - 1)}
                   disabled={currentPage === 1}>
                     «
@@ -150,19 +151,18 @@ const ProductTable = () => {
                     <button
                       key={index}
                       onClick={() => handlePageChange(index + 1)}
-                      className={`join-item btn h-full ${currentPage === index + 1 && 'bg-slate-500'}`}
+                      className={`join-item btn border-none h-full ${currentPage === index + 1 && 'bg-slate-400 rounded'}`}
                     >
                       {index + 1}
                     </button>
                   ))}
-                <button className="join-item btn"
+                <button className="join-item btn border-none"
                   onClick={() => handleNextPage(currentPage + 1)}
                   disabled={currentPage === totalPages}
                 >»
                 </button>
-              </div>
-            
-         
+            </div>
+            }
           </div>
         </div>
       )}

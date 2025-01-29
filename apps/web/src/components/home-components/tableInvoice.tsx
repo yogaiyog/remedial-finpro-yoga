@@ -71,24 +71,20 @@ const InvoiceTable = () => {
     return <div>Error: {error}</div>;
   }
 
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage((prevPage) => prevPage + 1);
-    }
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
   };
-
-  const handlePrevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage((prevPage) => prevPage - 1);
-    }
-  };
+  const handleNextPage = (page: number) => {
+    setCurrentPage(page)
+  }
 
   return (
     <>
-      {invoices.length > 0 && (
+   
         <div className="collapse collapse-open bg-slate-300 shadow-md shadow-emerald-900 min-h-[50vh]">
-          <div className="collapse-title text-xl font-bold">MY INVOICES</div>
-          <div className="collapse-content">
+          <div className="collapse-title text-xl font-bold text-center">MY INVOICES</div>
+          {invoices.length > 0 ? 
+          <div className="collapse-content flex flex-col justify-between">
             <div className="overflow-x-auto">
               <table className="table">
                 <thead>
@@ -109,7 +105,7 @@ const InvoiceTable = () => {
                     return (
                       <tr
                         key={invoice.id}
-                        className="hover:bg-slate-800 cursor-pointer"
+                        className="hover:bg-slate-100 cursor-pointer"
                         onClick={() => {
                           setSelectedInvoice(invoice);
                           setIsModalOpen(true);
@@ -128,23 +124,35 @@ const InvoiceTable = () => {
                 </tbody>
               </table>
             </div>
-            <div className="join w-full flex justify-center">
-              <button 
-                className="join-item btn" 
-                onClick={handlePrevPage}
-                disabled={currentPage === 1}>
-                  «
-              </button>
-              <button className="join-item btn bg-transparent border-none"> Page {currentPage} of {totalPages}</button>
-              <button className="join-item btn"
-                onClick={handleNextPage}
-                disabled={currentPage === totalPages}
-              >»
-              </button>
-            </div>
-          </div>
+            {invoices.length &&
+              <div className="join w-full flex justify-center">
+                  <button 
+                    className="join-item btn border-none" 
+                    onClick={() => handleNextPage(currentPage - 1)}
+                    disabled={currentPage === 1}>
+                      «
+                  </button>            
+                    {Array.from({ length: totalPages }, (_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => handlePageChange(index + 1)}
+                        className={`join-item btn border-none h-full ${currentPage === index + 1 && 'bg-slate-400 rounded'}`}
+                      >
+                        {index + 1}
+                      </button>
+                    ))}
+                  <button className="join-item btn border-none"
+                    onClick={() => handleNextPage(currentPage + 1)}
+                    disabled={currentPage === totalPages}
+                  >»
+                  </button>
+              </div>
+            }
+          </div> : <div className="text-center flex flex-col justify-center text-gray-500">No invoice to display</div>
+            }
+            
         </div>
-      )}
+    
       {isModalOpen && (
         <InvoiceDetail invoice={selectedInvoice} onClose={() => setIsModalOpen(false)} />
       )}

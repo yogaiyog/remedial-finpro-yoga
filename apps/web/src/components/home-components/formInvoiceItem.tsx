@@ -27,7 +27,7 @@ const InvoiceItemsForm = ({
         },
       })
       .then((response) => {
-        setProducts(response.data);
+        setProducts(response.data.products);
       })
       .catch((error) => {
         console.error("Error fetching products:", error);
@@ -110,7 +110,7 @@ const InvoiceItemsForm = ({
 
   return (
       <div className="modal modal-open">
-        <div className="modal-box w-11/12 max-w-5xl">
+        <div className="modal-box w-11/12 max-w-5xl bg-white">
          <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold">Add Invoice Items</h2>
           <button

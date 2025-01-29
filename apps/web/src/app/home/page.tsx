@@ -21,8 +21,8 @@ const Home = () => {
           <DataReport />
       </div>
     </div>
-     <div className="grid grid-cols-5 gap-2 mt-2">
-        <div className="col-span-1">
+     <div className="grid grid-cols-6 gap-2 mt-4">
+        <div className="col-span-2">
           <ClientTable />
         </div>
         <div className="col-span-4">

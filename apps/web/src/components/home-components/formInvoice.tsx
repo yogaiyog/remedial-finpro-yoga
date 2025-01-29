@@ -112,8 +112,8 @@ const FormInvoice = ({
   });
 
   return (
-    <div className="modal modal-open">
-      <div className="modal-box w-8/12 max-w-5xl">
+    <div className="modal modal-open bg-white">
+      <div className="modal-box w-8/12 max-w-5xl bg-white">
         <h3 className="font-bold text-lg">
           {isRecurring ? "Recurring Invoice" : "One-Time Invoice"}
         </h3>

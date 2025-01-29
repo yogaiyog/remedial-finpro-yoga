@@ -63,13 +63,13 @@ const NewProduct = ({ onClose }: NewProductProps) => {
   });
 
   return (
-    <div className="modal modal-open">
-      <div className="modal-box w-11/12 max-w-5xl">
+    <div className="modal modal-open bg-white">
+      <div className="modal-box w-11/12 max-w-5xl bg-white">
         <h3 className="font-bold text-lg">Add New Product</h3>
         <form onSubmit={formik.handleSubmit}>
           {/* Name Field */}
           <div className="form-control mb-4">
-            <label className="label font-bold">Name</label>
+            <label className="label font-bold">Product Name</label>
             <input
               type="text"
               name="name"
@@ -129,10 +129,10 @@ const NewProduct = ({ onClose }: NewProductProps) => {
 
           {/* Actions */}
           <div className="modal-action">
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn bg-emerald-500">
               Submit
             </button>
-            <button type="button" className="btn" onClick={onClose}>
+            <button type="button" className="btn bg-slate-500" onClick={onClose}>
               Close
             </button>
           </div>

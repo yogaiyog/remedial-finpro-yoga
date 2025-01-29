@@ -19,12 +19,12 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
 
   return (
     <div className="modal modal-open">
-      <div className="modal-box">
+      <div className="modal-box bg-slate-200">
         <h3 className="font-bold text-lg">{title}</h3>
         <p className="py-4">{desc}</p>
         <div className="modal-action">
           <button
-            className="px-4 py-2 btn-primary text-white rounded-lg hover:bg-slate-400"
+            className="px-4 py-2 btn-primary text-white rounded-lg hover:bg-emerald-700 bg-emerald-500 "
             onClick={onConfirm}
           >
             Yes

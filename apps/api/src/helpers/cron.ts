@@ -1,5 +1,6 @@
+import prisma from "@/prisma";
 import cron from "node-cron";
-import prisma from "../prisma"; // Prisma client
+
 
 // Jalankan cron setiap hari
 cron.schedule("* * * * *", async () => {
@@ -12,7 +13,7 @@ cron.schedule("* * * * *", async () => {
 
   const invoices = await prisma.invoice.findMany({
     where: {
-      recurringActive: true,
+      recurringActive : true,
       recurringSchedule: { not: null },
       recurringEndDate: { gte: now },
     },

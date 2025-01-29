@@ -7,6 +7,7 @@ import backendUrl from "@/helpers/backend_url";
 import { ITableClient } from "@/type/type";
 import {faFileInvoice, faHammer, faUser, faUserPlus} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import DetailClient from "./detailClient";
 
 const ClientTable = () => {
   const [clients, setClients] = useState<ITableClient[]>([]);
@@ -14,10 +15,11 @@ const ClientTable = () => {
   const [error, setError] = useState<string | null>(null);
   const [userID, setUserID] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalDetailClient , setModalDetaliClient] = useState(false)
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const router = useRouter();
-
+  const [selectedClient, setSelectedClient] = useState<ITableClient>()
   useEffect(() => {
     const storedUserId = localStorage.getItem("userId");
     setUserID(storedUserId);
@@ -86,8 +88,8 @@ const ClientTable = () => {
         <div className="skeleton h-16 w-full"></div>
       ) : (
         <div className="collapse-open collapse bg-slate-300 shadow-md shadow-emerald-900 h-full">
-          <div className="collapse-title  text-xl font-medium flex justify-between  items-baseline">
-            <h1>CLIENTS</h1>
+          <div className="collapse-title  text-xl font-medium flex justify-between items-baseline">
+            <h1 className="font-bold">CLIENTS</h1>
             <button className="btn btn-outline w-auto mt-2 btn-success"
                 onClick={() => setIsModalOpen(true)}>
                   <FontAwesomeIcon icon={faUserPlus} />
@@ -105,26 +107,35 @@ const ClientTable = () => {
                 <>
                   <table className="table">
                     <tbody>
-                      {clients.map((client, index) => (
-                        <tr key={client.id} className="text-xl">
-                          <td className="flex gap-2 items-center"><FontAwesomeIcon icon={faUser} />{client.name}</td>
-                          <td>
+                    {clients.map((client, index) => (
+                      <tr
+                        key={client.id}
+                        className="text-sm cursor-pointer hover:bg-slate-200"
+                        onClick={() => {
+                          setSelectedClient(client);
+                          setModalDetaliClient(true);
+                        }}
+                      >
+                        <td className="flex gap-2 items-center">
+                          <FontAwesomeIcon icon={faUser} />
+                          {client.name}
+                        </td>
+                        <td>
                           <FontAwesomeIcon icon={faFileInvoice} />
-                            <span className="mx-2">
-                                        
-                           </span>
-                            {client._count.invoices}
-                          </td>
-                        </tr>
-                      ))}
+                          <span className="mx-2"></span>
+                          {client._count.invoices}
+                        </td>
+                      </tr>
+                    ))}
                     </tbody>
                   </table>    
                 </>
               )}
             </div>
-            <div className="join w-full flex justify-center">
+            {clients.length &&
+            <div className="join w-full flex justify-center ">
                 <button 
-                  className="join-item btn" 
+                  className="join-item btn border-none" 
                   onClick={() => handleNextPage(currentPage - 1)}
                   disabled={currentPage === 1}>
                     «
@@ -133,22 +144,27 @@ const ClientTable = () => {
                     <button
                       key={index}
                       onClick={() => handlePageChange(index + 1)}
-                      className={`join-item btn h-full ${currentPage === index + 1 && 'bg-slate-500'}`}
+                      className={`join-item btn border-none h-full ${currentPage === index + 1 && 'bg-slate-400 rounded'}`}
                     >
                       {index + 1}
                     </button>
                   ))}
-                <button className="join-item btn"
+                <button className="join-item btn border-none"
                   onClick={() => handleNextPage(currentPage + 1)}
                   disabled={currentPage === totalPages}
                 >»
                 </button>
-              </div>
-            
+            </div>
+            }
           </div>
         </div>
       )}
-
+      {modalDetailClient && (
+        <DetailClient
+          onClose={() => setModalDetaliClient(false)}
+          client={selectedClient}
+        />
+      )}
       {isModalOpen && <NewClient onClose={() => setIsModalOpen(false)} />}
     </>
   );

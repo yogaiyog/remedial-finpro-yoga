@@ -61,7 +61,7 @@ const NewClient = ({ onClose }: NewClientProps) => {
 
   return (
     <div className="modal modal-open">
-      <div className="modal-box w-11/12 max-w-5xl">
+      <div className="modal-box bg-white w-11/12 max-w-5xl">
         <h3 className="font-bold text-lg">Add New Client</h3>
         <form onSubmit={formik.handleSubmit}>
           {/* Name Field */}
