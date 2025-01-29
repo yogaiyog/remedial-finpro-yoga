@@ -30,8 +30,6 @@ export class MailController {
       if (!invoice) {
         return res.status(404).send({ message: "Invoice not found" });
       }
-
-      console.log(invoice);
       
 
       const templatePath = path.join(__dirname, "../templates/invoice.ejs");
@@ -50,7 +48,7 @@ export class MailController {
       });
 
       console.log("Email sent: %s", info.messageId);
-
+      console.log(invoice.client.email);
       return res.status(200).send({ message: "Email has been sent" , invoice});
     } catch (error) {
       console.error("Error sending email:", error);

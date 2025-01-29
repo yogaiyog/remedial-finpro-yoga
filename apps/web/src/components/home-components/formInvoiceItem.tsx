@@ -135,7 +135,7 @@ const InvoiceItemsForm = ({
                           value={item.productId}
                           onChange={formik.handleChange}
                           onBlur={formik.handleBlur}
-                          className="input input-bordered w-full"
+                          className="input input-bordered w-full bg-stone-500 text-white"
                         >
                           <option value="" disabled>
                             Select Product
@@ -167,7 +167,7 @@ const InvoiceItemsForm = ({
                           value={item.quantity}
                           onChange={formik.handleChange}
                           onBlur={formik.handleBlur}
-                          className="input input-bordered w-full"
+                          className="input input-bordered w-full bg-stone-500 text-white"
                         />
                         {formik.touched.invoiceItems?.[index]?.quantity &&
                           formik.errors.invoiceItems?.[index] &&
@@ -213,7 +213,7 @@ const InvoiceItemsForm = ({
                     onClick={() =>
                       arrayHelpers.push({ productId: "", quantity: 1, price: 0 })
                     }
-                    className="btn bg-slate-700 mt-4"
+                    className="btn btn-outline bg-indigo-700 mt-4 text-white hover:text-indigo-500"
                   >
                     Add Row
                   </button>
@@ -221,7 +221,7 @@ const InvoiceItemsForm = ({
               )}
             />
 
-            <button type="submit" className="btn btn-success w-full">
+            <button type="submit" className="btn btn-outline hover:bg-emerald-700  w-full">
               Submit Invoice Items
             </button>
           </form>

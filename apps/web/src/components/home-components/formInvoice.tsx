@@ -124,7 +124,7 @@ const FormInvoice = ({
             <div className="flex w-full">
               <select
                 name="clientId"
-                className="input input-bordered w-3/4"
+                className="input input-bordered w-3/4  text-white bg-stone-500"
                 value={formik.values.clientId}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -142,7 +142,7 @@ const FormInvoice = ({
               <input
                 type="text"
                 placeholder="Search client"
-                className="input input-bordered mb-2 w-1/4"
+                className="input input-bordered mb-2 w-1/4  text-white bg-stone-500"
                 value={searchTerm}
                 onChange={handleSearch}
               />
@@ -158,7 +158,7 @@ const FormInvoice = ({
             <input
               type="date"
               name="dueDate"
-              className="input input-bordered"
+              className="input input-bordered text-white bg-stone-500"
               value={formik.values.dueDate}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -174,7 +174,7 @@ const FormInvoice = ({
                 <label className="label font-bold">Recurring Schedule</label>
                 <select
                   name="recurringSchedule"
-                  className="input input-bordered"
+                  className="input input-bordered bg-stone-500 text-black"
                   value={formik.values.recurringSchedule}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -199,7 +199,7 @@ const FormInvoice = ({
                 <input
                   type="date"
                   name="recurringEndDate"
-                  className="input input-bordered"
+                  className="input input-bordered bg-stone-500 text-black"
                   value={formik.values.recurringEndDate}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -215,10 +215,10 @@ const FormInvoice = ({
           )}
 
           <div className="modal-action">
-            <button type="submit" className="btn btn-primary" disabled={isLoading}>
+            <button type="submit" className="btn bg-emerald-500 hover:bg-emerald-700 hover:text-black text-white" disabled={isLoading}>
               Submit
             </button>
-            <button type="button" className="btn" onClick={onClose}>
+            <button type="button" className="btn bg-slate-500 hover:bg-rslate700 hover:text-black text-white" onClick={onClose}>
               Close
             </button>
           </div>

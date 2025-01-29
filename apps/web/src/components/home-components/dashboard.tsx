@@ -22,9 +22,9 @@ const DataReport = () => {
         label: '# of Invoices',
         data: [0, 0, 0],
         backgroundColor: [
-          '#E1F10E', // Pending - Yellow
-          '#0EF18F', // Paid - Blue
-          '#F10E70', // Overdue - Red
+          '#fe9a00', // Pending - Yellow
+          '#00bc7d',
+          '#ff2056', // Overdue - Red
         ],
         borderColor: [
           '#788108', // Pending - Yellow

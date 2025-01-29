@@ -17,7 +17,7 @@ export const Header = () => {
 
   return (
     <>
-      <div className="navbar bg-emerald-500 shadow-lg shadow-cyan-500">
+      <div className="navbar bg-slate-500">
         <div className="flex-1">
           <a className=" text-white text-2xl ml-8">Inovice</a>
         </div>
@@ -26,10 +26,10 @@ export const Header = () => {
 
             <li className='mr-16'>
               <details>
-                <summary onClick={()=>{router.push('/account')}}>Account</summary>
+                <summary  className='text-lg text-white'>Account</summary>
                 <ul className="bg-slate-100 rounded-t-none p-2 z-50 min-w-32">
                   <li>
-                    <a>My Profile</a>
+                    <a onClick={()=>{router.push('/account')}}>My Profile</a>
                   </li>
                   <li>
                     <button onClick={handleLogout}>Logout</button>

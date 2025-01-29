@@ -2,6 +2,8 @@
 import { useState } from "react";
 import FormInvoice from "./formInvoice";
 import InvoiceItemsForm from "./formInvoiceItem";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
 const NewInvoiceButton = () => {
   const [isRecurring, setIsRecurring] = useState(false);
@@ -13,15 +15,16 @@ const NewInvoiceButton = () => {
     <div className="m-auto">
       <div>
         <div className="dropdown dropdown-hover">
-          <div tabIndex={0} role="button" className="btn btn-success m-1 text-xl">
+          <div tabIndex={0} role="button" className="btn bg-slate-500 hover:bg-slate-700 shadow-md border-none text-white m-1 text-xl">
             Create Invoice
+            <FontAwesomeIcon icon={faPlusCircle}/>
           </div>
           <ul
             tabIndex={0}
-            className="dropdown-content menu menu-horizontal bg-slate-100 rounded-box z-[1] w-52 p-2 shadow"
+            className="dropdown-content menu menu-horizontal bg-slate-500 rounded-box z-[1] w-44 p-2 shadow text-white"
           >
             <li>
-              <button
+              <button className="hover:bg-slate-700 w-full"
                 onClick={() => {
                   setIsRecurring(false);
                   setIsModalOpen(true);
@@ -31,7 +34,7 @@ const NewInvoiceButton = () => {
               </button>
             </li>
             <li>
-              <button
+              <button className="hover:bg-slate-700 w-full"
                 onClick={() => {
                   setIsRecurring(true);
                   setIsModalOpen(true);

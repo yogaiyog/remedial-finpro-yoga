@@ -7,13 +7,13 @@ import ProductTable from "@/components/home-components/tableProduct";
 const Home = () => {
   return (
     <div className="min-h-[90vh] px-20 py-10 -z-10 bg-slate-100">
-      <div className="grid grid-cols-5 gap-2">
+      <div className="grid grid-cols-5 gap-4">
         <div className="col-span-1">
           <NewInvoice/>
         </div>
       </div>
      <div className="mt-2"></div>
-    <div className="grid grid-cols-5 gap-2">
+    <div className="grid grid-cols-5 gap-4">
       <div className="col-span-3">
         <ProductTable />
       </div>
@@ -21,7 +21,7 @@ const Home = () => {
           <DataReport />
       </div>
     </div>
-     <div className="grid grid-cols-6 gap-2 mt-4">
+     <div className="grid grid-cols-6 gap-4 mt-4">
         <div className="col-span-2">
           <ClientTable />
         </div>

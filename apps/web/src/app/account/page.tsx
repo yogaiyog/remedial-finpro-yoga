@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import backendUrl from '@/helpers/backend_url';
 
 const Account = () => {
   const [user, setUser] = useState<any>(null);
@@ -15,7 +16,7 @@ const Account = () => {
 
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/user/${userId}/account`);
+        const response = await axios.get(`${backendUrl}api/user/${userId}/account`);
         setUser(response.data);
       } catch (error) {
         console.error('Error fetching user data:', error);

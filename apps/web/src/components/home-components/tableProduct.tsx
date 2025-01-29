@@ -95,9 +95,9 @@ const ProductTable = () => {
         <div className="collapse collapse-open bg-slate-300 min-h-[50vh] shadow-md shadow-emerald-900 h-full">
           <div className="collapse-title text-xl font-medium flex justify-between items-baseline">
             <h1>MY PRODUCTS</h1>
-            <button className="btn btn-outline w-auto mt-2 btn-success"
+            <button className="btn border-emerald-500 hover:bg-emerald-700 w-auto mt-2 text-emerald-700 hover:text-white"
                 onClick={() => setIsModalOpen(true)}>
-              <FontAwesomeIcon icon={faCirclePlus} />
+              <FontAwesomeIcon icon={faCirclePlus} className=""/>
             </button> 
           </div>
           <div className="collapse-content flex flex-col justify-between">
