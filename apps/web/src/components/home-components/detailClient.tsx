@@ -15,9 +15,9 @@ interface DetailClientProps {
 }
 
 const DetailClient: React.FC<DetailClientProps> = ({ client, onClose }) => {
-  if (!client) return null;
 
   const [confirmationModalOpen, setConfirmationModalOpen] = useState(false);
+  if (!client) return null; // ✅ Pindahkan sebelum hooks
 
   const handleDelete = async () => {
     try {
@@ -62,7 +62,7 @@ const DetailClient: React.FC<DetailClientProps> = ({ client, onClose }) => {
                 </div>
                 <div>
                     <p className="text-sm font-semibold">Invoices:</p>
-                    <p>{client._count.invoices}</p>
+                    <p>{client._count?.invoices ?? 0}</p> 
                 </div>
                 </div>
                 <div className='flex gap-4 justify-between mt-4'>
