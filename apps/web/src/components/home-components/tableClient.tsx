@@ -29,47 +29,48 @@ const ClientTable = () => {
     }
   }, [router]);
 
-  const fetchClients = async (page: number) => {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      router.push("/auth/login");
-      return;
-    }
-
-    setLoading(true);
-
-    try {
-      const response = await fetch(`${backendUrl}client/${userID}/userId?page=${page}&limit=10`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status}`);
-      }
-
-      const data = await response.json();
-      setClients(data.clients);
-      setCurrentPage(data.currentPage);
-      setTotalPages(data.totalPages);
-    } catch (err: any) {
-      setError(err.message);
-      router.push("/auth/login");
-      localStorage.clear();
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchClients = async (page: number) => {
+      const token = localStorage.getItem("token");
+  
+      if (!token) {
+        router.push("/auth/login");
+        return;
+      }
+  
+      setLoading(true);
+  
+      try {
+        const response = await fetch(`${backendUrl}client/${userID}/userId?page=${page}&limit=10`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+  
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
+        }
+  
+        const data = await response.json();
+        setClients(data.clients);
+        setCurrentPage(data.currentPage);
+        setTotalPages(data.totalPages);
+      } catch (err: any) {
+        setError(err.message);
+        router.push("/auth/login");
+        localStorage.clear();
+      } finally {
+        setLoading(false);
+      }
+    };
+  
     if (userID) {
       fetchClients(currentPage);
     }
   }, [userID, currentPage, router]);
+  
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);

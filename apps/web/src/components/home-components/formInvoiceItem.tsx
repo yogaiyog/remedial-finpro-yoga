@@ -100,11 +100,12 @@ const InvoiceItemsForm = ({
         price: selectedProduct ? selectedProduct.price * item.quantity : 0,
       };
     });
-
+  
     if (JSON.stringify(updatedInvoiceItems) !== JSON.stringify(formik.values.invoiceItems)) {
       formik.setFieldValue("invoiceItems", updatedInvoiceItems);
     }
-  }, [formik.values.invoiceItems, products]);
+  }, [formik, formik.values.invoiceItems, products]); // Menambahkan formik sebagai dependensi
+  
 
   if (!isOpen) return null;
 

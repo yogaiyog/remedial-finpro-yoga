@@ -5,13 +5,15 @@ import axios from 'axios';
 import { Invoice, InvoiceDetailProps, InvoiceItem, Product } from '@/type/type';
 import { toast } from 'react-toastify';
 import ConfirmationModal from '../confirmation';
-import html2pdf from 'html2pdf.js';
 import InvoiceItemsForm from './formInvoiceItem';
 import InvoiceStatusUpdate from './invoiceStatusUpdate';
 import SendInvoiceButton from './sendInvoice';
 import backendUrl from '@/helpers/backend_url';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload, faPencil } from '@fortawesome/free-solid-svg-icons';
+
+// Impor html2pdf secara dinamis
+const html2pdf = typeof window !== 'undefined' ? require('html2pdf.js') : null;
 
 const InvoiceDetail: React.FC<InvoiceDetailProps> = ({ invoice, onClose }) => {
   const [productMap, setProductMap] = useState<{ [key: string]: string }>({});
@@ -23,9 +25,10 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({ invoice, onClose }) => {
   const [statusUpdateModal, setStatusUpdateModal] = useState<boolean>(false);
   const slideref = useRef<HTMLDivElement | null>(null);
 
-  async function handlePdf() {
-    if (!slideref.current) {
-      console.error('Slide reference not found.');
+  // Handle pdf generation
+  const handlePdf = () => {
+    if (!slideref.current || !html2pdf) {
+      console.error('Slide reference or html2pdf is not available.');
       return;
     }
     if (!invoice) return;
@@ -46,7 +49,7 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({ invoice, onClose }) => {
         console.error('Error generating PDF:', error);
         toast.error('Failed to generate PDF.');
       });
-  }
+  };
 
   useEffect(() => {
     if (!invoice) return;
@@ -137,7 +140,7 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = ({ invoice, onClose }) => {
   return (
     <div className="modal modal-open">
       <div ref={slideref} className="modal-box w-11/12 max-w-5xl bg-white">
-        <button
+      <button
           className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
           onClick={onClose}
         >
